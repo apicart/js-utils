@@ -27,6 +27,14 @@
 - [Event Dispatcher](https://github.com/apicart/js-utils#event-dispatcher-utilseventdispatcher)
 - [Flash Messages](https://github.com/apicart/js-utils#flash-messages-utilsflashmessages)
 
+## Instalace
+
+### Cdn 
+```html
+<!-- Master version from Github -->
+<script src="https://cdn.jsdelivr.net/gh/apicart/js-utils/dist/utils.min.js"></script>
+```
+
 ## Ajax (Utils.ajax)
 Ajaková komponenta zjednodušuje práci s XMLHttpRequest.
 
@@ -248,7 +256,7 @@ Data se díky tomu neztratí například při přechodu mezi stránkami.
 **Použítí s elementy**
 
 Stačí přidat atribut `data-bind` a data v elementu se budou automaticky ukládat a vyplňovat. Klíče uvedené v parametru mohou být zanořené.
-```js
+```html
 <input data-bind="username">
 <select data-bind="billing.method"></select>
 ```
