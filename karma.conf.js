@@ -14,7 +14,7 @@ module.exports = function(config) {
 		customLaunchers: {
 		  ChromeHeadlessNoSandbox: {
 			base: 'Chrome',
-			flags: ['--no-sandbox']
+			flags: ['--no-sandbox', '--dump-dom']
 		  }
 		},
 		port: 9876,
