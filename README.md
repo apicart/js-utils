@@ -27,6 +27,14 @@
 - [Event Dispatcher](https://github.com/apicart/js-utils#event-dispatcher-utilseventdispatcher)
 - [Flash Messages](https://github.com/apicart/js-utils#flash-messages-utilsflashmessages)
 
+## Installation
+
+### Cdn 
+```html
+<!-- Master version from Github -->
+<script src="https://cdn.jsdelivr.net/gh/apicart/js-utils/dist/utils.min.js"></script>
+```
+
 ## Ajax (Utils.ajax)
 This component simplifies work with the XMLHttpRequest.
 
@@ -38,7 +46,7 @@ This component simplifies work with the XMLHttpRequest.
 | Default value   | true     | true     | {}     | {}      | get    | 5000    | ''     | false           | function() {} | function() {} |
 
 **ajax(*object* $parameters): *void***
-```
+```js
 Utils.ajax({
     url: 'https://example.com',
     method: 'post',
@@ -247,7 +255,7 @@ Data binder is a component, that saves data from form elements and fills them ba
 **Použítí s elementy**
 
 All you need is to add the `data-bind` attribute to the element which data should be saved. Keys provided inside the attribute can be nested.
-```js
+```html
 <input data-bind="username">
 <select data-bind="billing.method"></select>
 ```
