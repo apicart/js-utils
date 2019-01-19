@@ -16,7 +16,7 @@
     "build:test-stack": "rollup -c scripts/test-stack.js",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
-    "test:chrome": "karma start --single-run --browsers ChromeHeadless karma.conf.js"
+    "test:chrome": "karma start --single-run --browsers Chrome karma.conf.js"
   },
   "repository": {
     "type": "git",
