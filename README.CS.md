@@ -1,15 +1,15 @@
-# Js-Utils
-A small set of useful utilities for simpler development.
+# Utility
+Během vývoje jsme vytvořili několik utilit, které nám usnadňují vývoj. 
 
 ## Ajax (Utils.ajax)
-This component simplifies work with the XMLHttpRequest.
+Ajaková komponenta zjednodušuje práci s XMLHttpRequest.
 
-**Parameters**
+**Parametry**
 
-| Parameter       | async    | cache    | data   | headers | method | timeout | url    | withCredentials | start         | complete      |
+| Parametr        | async    | cache    | data   | headers | method | timeout | url    | withCredentials | start         | complete      |
 |-----------------|----------|----------|--------|---------|--------|---------|--------|-----------------|---------------|---------------|
-| Type            | boolean  | boolean  | object | object  | string | number  | string | boolean         | function      | function      |
-| Default value   | true     | true     | {}     | {}      | get    | 5000    | ''     | false           | function() {} | function() {} |
+| Typ             | boolean  | boolean  | object | object  | string | number  | string | boolean         | function      | function      |
+| Výchozí hodnota | true     | true     | {}     | {}      | get    | 5000    | ''     | false           | function() {} | function() {} |
 
 **ajax(*object* $parameters): *void***
 ```
@@ -23,64 +23,64 @@ Utils.ajax({
 ```
 
 ## Console (Utils.console)
-Wraps the default browser console and ensures the cross-browser compatibility.
+Konzole obaluje základní funkci console a zajišťuje tak funkci napříč prohlížeči.
 
-**error(*mixed* $parameter, *mixed* $parameter, ...): *utils.console***
+**error(*mixed* $parametr, *mixed* $parametr, ...): *utils.console***
 ```
 Utils.console.error('Some', 'Value');
 ```
 
-**log(*mixed* $parameter, *mixed* $parameter, ...): *utils.console***
+**log(*mixed* $parametr, *mixed* $parametr, ...): *utils.console***
 ```
 Utils.console.log('Some', 'Value');
 ```
 
-**warn(*mixed* $parameter, *mixed* $parameter, ...): *utils.console***
+**warn(*mixed* $parametr, *mixed* $parametr, ...): *utils.console***
 ```
 Utils.console.warn('Some', 'Value');
 ```
 
 ## DOM (Utils.dom)
-Simplifies work with Document Object Model.
+DOM tato komponenta zjednodušuje práci s Document Object Model.
 
 **matches(*Element* $element, *string* $selector): *boolean***
 
-Returns true if element matches selector. If not, returns false.
+Vrací true, pokud element odpovídá selektoru. Pokud neodpovídá, vrací false.
 ```
 Utils.dom.matches(document.querySelector('.element', '.selected');
 ```
 
 **on(*array*|*string* $eventTypes, *array*|*string* $selectors, *function*|*null* $callback): *utils.dom***
 
-Adds event listener to selected elements. Works even on dynamically added elements.
+Připojuje posluchače na událost k elementům. Funguje i na dynamicky přidaných elementech.
 ```
 Utils.dom.on('click', '.element', 'function() {...});
 ```
 
 **findParent(*Element* $element, *string* $selector): *Element*|*null***
 
-Returns element parent based on selector. If the parent was not found, returns null.
+Vrací rodiče elementu na základě selektoru. Pokud rodiče nenajde, vrací null.
 ```
 Utils.dom.findParent(Element $element, '.parent');
 ```
 
 **addClass(*Element* $element, *string* $classes): *utils.dom***
 
-Adds one or multiple classes to selected elements.
+Přidá jednu nebo více tříd k elementu.
 ```
 Utils.dom.addClass(document.querySelector('.element'), 'first second third');
 ```
 
 **removeClass(*Element* $element, *string* $classes): *utils.dom***
 
-Removes one or multiple classes from selected elements.
+Odebere jednu nebo více tříd z elementu.
 ```
 Utils.dom.removeClass(document.querySelector('.element'), 'first second third');
 ```
 
 **trigger(*Element* $element, *string* $event): *utils.dom***
 
-Triggers an event on selected element.
+Spouští událost u daného elementu.
 ```
 Utils.dom.trigger(document.querySelector('.button'), 'click');
 ```
@@ -88,7 +88,7 @@ Utils.dom.trigger(document.querySelector('.button'), 'click');
 ## Json (Utils.json)
 **isJson(*string* $content): *boolean***
 
-Checks if the provided data are json. If not returns false.
+Kontroluje, jestli jsou daná data JSON. Pokud ano, vrací true. Pokud ne, vrací false.
 ```
 Utils.json.isJson('{a: "b"}'); // true
 Utils.json.isJson('Text'); // false
@@ -96,14 +96,14 @@ Utils.json.isJson('Text'); // false
 
 **parse(*string* $content): *object***
 
-Converts json to object. If the provided data are not json, returns an empty object.
+Převádí json na javascriptový objekt.
 ```
 Utils.json.parse('{a: "b"}'); // {a: "b"}
 ```
 
 **stringify(*object* $object): *string***
 
-Converts javascript object into json.
+Převádí javascriptový objekt na json.
 ```
 Utils.json.stringify({a: "b"}); // "{a: "b"}"
 ```
@@ -111,7 +111,7 @@ Utils.json.stringify({a: "b"}); // "{a: "b"}"
 ## Loops (Utils.loops)
 **forEach(*object*|*array* $iterable, *function* $callback): void**
 
-Function that is able to iterate over objects and arrays.
+Metoda, která zvládne iterovat nad objekty i polem.
 ```
 Utils.loops.forEach([1, 2, 3], function(key, value) {...});
 Utils.loops.forEach(document.querySelectorAll('.element'), function(key, element) {...});
@@ -120,7 +120,7 @@ Utils.loops.forEach(document.querySelectorAll('.element'), function(key, element
 ## Objects (Utils.objects)
 **assign(*object* $object, *string* $keyPath, *mixed* $value): *utils.objects***
 
-Polyfill of the Object.assign for older browsers. Is able to assign nested properties.
+Polyfill Object.assign pro starší prohlížeče. Umí vložit i vnořené hodnoty.
 ```
 var a = {x: 1};
 Utils.objects.assign(a, 'y.z', 2); // {x: 1, y: {z: 2}}
@@ -128,28 +128,28 @@ Utils.objects.assign(a, 'y.z', 2); // {x: 1, y: {z: 2}}
 
 **copy(*object* $object): *object***
 
-Returns a new copy of the provided object. Object copy is without a reference to copied object.
+Vrací novou kopii zadaného objektu. Kopie je bez reference ke kopírovanému objektu.
 ```
 Utils.objects.copy({a: "b"}); // {a: "b"}
 ```
 
 **delete(*object* $object, *string* $keyPath): *utils.objects***
 
-Removes keys from object. Is able to remove nested keys.
+Odebere klíče z objektu. Zvládne odebrat i vnořené klíče.
 ```
 Utils.objects.delete({a: {b: {c: "1", d: "2"}}}, 'a.b.c'); // {a: {b: {d: "2"}}}
 ```
 
 **find(*object* $object, *string* $keyPath): *mixed***
 
-This method is able to find a value according to provided key. The key can be arbitrarily nested. If the key doesnt exists, returns null.
+Tato metoda je schopna najít a vrátit hodnotu klíče. Klíč mohou být libovolně zanořené. Pokud klíč neexistuje, vrací null.
 ```
 Utils.objects.find({a: {b: {c: "1"}}}, 'a.b.c'); // 1
 ```
 
 **isObject(*mixed* $data): *boolean***
 
-Checks if the provided data are object.
+Kontroluje, jestli jsou data objekt.
 ```
 Utils.objects.isObject({a: "b"}); // true
 Utils.objects.isObject(null); // false
@@ -158,7 +158,7 @@ Utils.objects.isObject([]); // false
 
 **merge(*object* $object1, *object* $object2, ...): *object***
 
-Merges two objects into a new one. The new object is without reference to the merged objects.
+Spojí dva objekty. Je možné spojovat i libovolně zanořené objekty. Vrací nový objekt, který je bez referencí k předchozím objektům.
 ```
 Utils.objects.merge({a: "1"}, {b: "2"}); // {a: "1", b: "2"}
 Utils.objects.merge({a: {b: "1"}}, {a: {c: "2"}}); // {a: {b: "1", c: "2"}}
@@ -166,7 +166,6 @@ Utils.objects.merge({a: {b: "1"}}, {a: {c: "2"}}); // {a: {b: "1", c: "2"}}
 
 **values(*object* $object): *array***
 
-Removes keys from provided object and returns its data.
 Odstraní klíče daného objektu a vrátí jejich data.
 ```
 Utils.objects.values({a: "b", c: "d"}): // ["b", "d"]
@@ -175,14 +174,13 @@ Utils.objects.values({a: "b", c: "d"}): // ["b", "d"]
 ## Strings (Utils.strings)
 **firstToUpper(*string* $string): *string***
 
-Converts first letter of the given string to upper case.
+Převede první znak textu na velké písmeno.
 ```
 Utils.strings.firstToUpper('test') // Test
 ```
 
 **generateHash(*integer* $length, *string*|*null* $characters = 'abcdefghijklmnopqrstuvwxyz0123456789'): *string***
 
-Generates hash from given characters and length.
 Vytvoří hash o dané délce ze zadaných znaků.
 ```
 Utils.strings.generateHash(32) // 32 characters long hash
@@ -190,7 +188,8 @@ Utils.strings.generateHash(32) // 32 characters long hash
 
 **sprintf(*string* $content, *object*|*array* $parameters): *string***
 
-Replaces placeholders by given values.
+Nahrazuje placeholdery zadanými hodnotami.
+
 ```
 Utils.strings.sprintf('%0% je %1%', ['Apicart', 'nejlepší']) // Apicart je nejlepší
 Utils.strings.sprintf('%spolecnost% je %hodnoceni%', {spolecnost: 'Apicart', hodnoceni: 'nejlepší'}) // Apicart je nejlepší
@@ -199,7 +198,8 @@ Utils.strings.sprintf('%spolecnost% je %hodnoceni%', {spolecnost: 'Apicart', hod
 ## Url (Utils.url)
 **getQueryParameter(*string* $name, *string* $url): *\**|*null***
 
-Returns query parameter from the given url. If the parameter was not found, returns null.
+Vrací query parametr ze zadané url adresy. Pokud parametr nenajde, vrací null.
+
 ```
 Utils.url.getQueryParameter('number', 'https://example.com?number=1') // 1
 ```
@@ -207,7 +207,8 @@ Utils.url.getQueryParameter('number', 'https://example.com?number=1') // 1
 ## Validators (Utils.validators)
 **isEmpty(*mixed* $data): *boolean***
 
-Returns true if the provided data are empty. Otherwise returns false.
+Vrací true, jestliže je jsou zadaná data prázdná. Pokud ne, vrací false.
+
 ```
 Utils.validators.isEmpty([]) // true
 Utils.validators.isEmpty({}) // true
@@ -215,12 +216,12 @@ Utils.validators.isEmpty('') // true
 ```
 
 ## Data Binder (Utils.dataBinder)
-
-Data binder is a component, that saves data from form elements and fills them back automatically after the page refresh.
+Data binder je komponenta, která ukládá data z formulářových prvků a automaticky je doplňuje po znovu načtení stránky.
+Data se díky tomu neztratí například při přechodu mezi stránkami.
 
 **Použítí s elementy**
 
-All you need is to add the `data-bind` attribute to the element which data should be saved. Keys provided inside the attribute can be nested.
+Stačí přidat atribut `data-bind` a data v elementu se budou automaticky ukládat a vyplňovat. Klíče uvedené v parametru mohou být zanořené.
 ```
 <input data-bind="username">
 <select data-bind="billing.method"></select>
@@ -229,7 +230,7 @@ All you need is to add the `data-bind` attribute to the element which data shoul
 
 **addData(*string* $keyPath, *string*|*number* $value): *utils.dataBinder***
 
-This method adds data according to given key and value. Keys can be nested.
+Tato metoda přidá data k danému klíčy. Klíče mohou být zanořené.
 ```
 Utils.dataBinder.addData('name', 'Karel');
 Utils.dataBinder.addData('addresses.billing.town', 'Praha');
@@ -238,7 +239,8 @@ Utils.dataBinder.addData('addresses.billing.town', 'Praha');
 
 **removeData(*string* $keyPath): *utils.dataBinder***
 
-Removes data according to the given key.
+Odebere data dle zadaného klíče.
+
 ```
 Utils.dataBinder.addData('name');
 Utils.dataBinder.addData('addresses.billing.town');
@@ -247,78 +249,80 @@ Utils.dataBinder.addData('addresses.billing.town');
 
 **bindData(*boolean* $all = false): *utils.dataBinder***
 
-This method triggers the autofill. If the `all` parametr is set to true, it will fill all elements even those that were already filled.
+Touto metodou se zavolá vyplnění elementů. Pokud se uvede all, vyplní i již vyplněné elementy.
 
 ```
-Utils.dataBinder.bindData() // Fills only those elements, that were not filled yet
-Utils.dataBinder.bindData(true) // Fills all
+Utils.dataBinder.bindData() // Vyplní pouze to, co ještě není vyplněné/změněné
+Utils.dataBinder.bindData(true) // Vyplní vše
 ```
 
 ## Event Dispatcher (Utils.eventDispatcher)
-
-Event dispatcher allows you communicate between components based on events.
-If for example a product was added into the cart, you can trigger `productAddedIntoCart` event.
-Listeners waiting for this event will be triggered with given values.
+Event dispatcher umožňuje komponentám mezi sebou komunikovat na základě událostí.
+V přápadě například vložení produktu do košíku se spůstí událost "Přidán produkt"
+a všechny komponenty, které na tuto událost čekají, provedou nějakou akci. Mohou tedy
+například zobrazit popup "Produkt byl přidán úspěšně do košíku".
+Apicart má již v základu několik událostí, které můžete využít. Přečíst si o nich můžete v sekci [události]().
 
 **addListener(*string* $listenerKey, *string*|*array* $eventName, *function* $callback, *boolean*|*null* $singleAction = false)**
 
-This method registers listener. If the `singleAction` parameter is set to true, the listener will be triggered only once (it is useful for dynamically generated listeners).
+Tato metoda zaregistruje posluchače na událost. Je možné uvést, že se provede pouze jednou, nastavením `singleAction` parametru na true.
 ```
-Utils.eventDispatcher.addListener('number-dumper', 'send-number', function (number) {
-    console.log(number);
-}, true); // Single action is set to true, so the listener will be triggered only once
-Utils.eventDispatcher.addListener('product-popup', 'product-added-into-cart', function (parameters) {...});
+Utils.eventDispatcher.addListener('vypis-cislo', 'rozesli-cislo', function (cislo) {
+    console.log(cislo);
+}, true); // Single action je nastavena na true, provede se pouze jednou, pak se odebere (hodí se u dynamicky generovaných posluchačů)
+Utils.eventDispatcher.addListener('produktovy-popup', 'produkt-pridan-do-kosiku', function (parametry) {...});
 ```
 
 
 **removeListener(*string*|*array* $listenerKey, *string*|*array* $event): *utils.eventDispatcher***
 
-Removes listener from given event.
+Odebere posluchače.
 ```
-Utils.eventDispatcher.removeListener('posluchač', 'event1 event2');
-Utils.eventDispatcher.removeListener('posluchač', ['event1', 'event2']);
-Utils.eventDispatcher.removeListener('number-dumper', 'send-number');
+Utils.eventDispatcher.removeListener('posluchač', 'událost1 událost2');
+Utils.eventDispatcher.removeListener('posluchač', ['událost1', 'událost2']);
+Utils.eventDispatcher.removeListener('vypis-cislo', 'rozesli-cislo');
 ```
 
 **dispatchEvent(*string*|*array* $event, *mixed*|*null* $parameters): *utils.evendDispatcher***
 
-Triggers selected event. Given parameters are provided to the listeners.
+Vyvolá událost. Posluchačům je možné předat argumenty.
 ```
-Utils.eventDispatcher.dispatchEvent('event1 event2');
-Utils.eventDispatcher.dispatchEvent(['event1', 'event2']);
+Utils.eventDispatcher.dispatchEvent('událost1 událost2');
+Utils.eventDispatcher.dispatchEvent(['událost1', 'událost2']);
 Utils.eventDispatcher.dispatchEvent('rozesli-cislo', 1);
 ```
 
 ## Flash Messages (Utils.flashMessages)
-
-Flash messages allows you to persist messages through redirects.
+Flash message umožňují udržovat zprávy napříč redirekty. Pokud je například uživatel přesměrován
+z nějaké stránky a po dokončení přesměrování chcete zobrazit zprávu, stačí ji přidat do flash message
+a poté zpracovat.
 
 **addMessage(*string* $content, *string*|*null* $type = 'info'): *utils.flashMessages***
 
-Adds message. You can provide a custom type.
+Přidá zprávu. Je možné uvést typ.
 ```
 Utils.flashMessages.addMessage('Text');
-Utils.flashMessages.addMessage('Warning!', 'warning');
+Utils.flashMessages.addMessage('Pozor', 'warning');
 ```
 
 **getMessages(): *object***
 
-Returns messages.
+Vrací objekt se zprávami.
 ```
 Utils.flashMessages.getMessages();
 ```
 
 **hasMessages(): *boolean***
 
-Returns true if there are some persisted messages.
+Vrací true, pokud jsou nějaké zprávy k dispozici.
 ```
 Utils.flashMessages.hasMessages();
 ```
 
 **processMessages(*function* $callback, *string*|*null* $type): *utils.flashMessages***
 
-Iterates over messages. If the type is set, the iteration is done only over the messages of the given type.
+Provede iteraci nad všema zprávama. Pokud je zadán typ, provede se iterace pouze nad zvolenými zprávami.
 ```
-Utils.flashMessages.processMessages(function (message, type) { ... }); // Processes all messages
-Utils.flashMessages.processMessages(function (message, typ) { ... }, 'info'); // Processes only the info messages
+Utils.flashMessages.processMessages(function (message, type) { // Zpracuje všechny zprávy });
+Utils.flashMessages.processMessages(function (message, typ) { // Zpracuje pouze zprávy s typem info }, 'info');
 ```
