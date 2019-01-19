@@ -1,6 +1,7 @@
 module.exports = function(config) {
 	config.set({
 		frameworks: ['mocha', 'chai'],
+		browsers: ['Chrome', 'ChromeHeadless', 'ChromeHeadlessNoSandbox'],
 		files: [
 			'dist/utils.js',
 			'tests/stack-browser.js'
@@ -11,6 +12,12 @@ module.exports = function(config) {
 			'karma-mocha'
 		],
 		reporters: ['progress'],
+		customLaunchers: {
+		  ChromeHeadlessNoSandbox: {
+			base: 'ChromeHeadless',
+			flags: ['--no-sandbox']
+		  }
+		},
 		port: 9876,
 		colors: true,
 		logLevel: config.LOG_INFO,
