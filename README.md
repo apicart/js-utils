@@ -27,8 +27,6 @@
 - [Event Dispatcher](https://github.com/apicart/js-utils#event-dispatcher-utilseventdispatcher)
 - [Flash Messages](https://github.com/apicart/js-utils#flash-messages-utilsflashmessages)
 
-A small set of useful utilities for simpler development.
-
 ## Ajax (Utils.ajax)
 This component simplifies work with the XMLHttpRequest.
 
