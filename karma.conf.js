@@ -1,7 +1,6 @@
 module.exports = function(config) {
 	config.set({
 		frameworks: ['mocha', 'chai'],
-		browsers: ['Chrome', 'ChromeHeadless', 'ChromeHeadlessNoSandbox'],
 		files: [
 			'dist/utils.js',
 			'tests/stack-browser.js'
@@ -14,7 +13,7 @@ module.exports = function(config) {
 		reporters: ['progress'],
 		customLaunchers: {
 		  ChromeHeadlessNoSandbox: {
-			base: 'ChromeHeadless',
+			base: 'Chrome',
 			flags: ['--no-sandbox']
 		  }
 		},
