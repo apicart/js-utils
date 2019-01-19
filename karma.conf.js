@@ -13,7 +13,7 @@ module.exports = function(config) {
 		reporters: ['progress'],
 		customLaunchers: {
 		  ChromeHeadlessNoSandbox: {
-			base: 'Chrome',
+			base: 'ChromeHeadless',
 			flags: ['--no-sandbox', '--dump-dom']
 		  }
 		},
