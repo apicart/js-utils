@@ -1,0 +1,6 @@
+import './components/dom.js'
+import './components/event-dispatcher.js'
+import './components/flash-messages.js'
+import './components/json.js'
+import './components/objects.js'
+import './components/strings.js'
