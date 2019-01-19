@@ -10,7 +10,7 @@ module.exports = function(config) {
 			'karma-chai',
 			'karma-mocha'
 		],
-		browsers: ['ChromeHeadless'],
+		browsers: ['Chrome'],
 		reporters: ['progress'],
 		port: 9876,
 		colors: true,
