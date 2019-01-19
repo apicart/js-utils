@@ -11,12 +11,6 @@ module.exports = function(config) {
 			'karma-mocha'
 		],
 		reporters: ['progress'],
-		customLaunchers: {
-		  ChromeHeadlessNoSandbox: {
-			base: 'ChromeHeadless',
-			flags: ['--no-sandbox', '--dump-dom']
-		  }
-		},
 		port: 9876,
 		colors: true,
 		logLevel: config.LOG_INFO,
