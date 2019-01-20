@@ -12,6 +12,7 @@
 - Malá sada užitečných utilit pro jednodušší vývoj.
 - ✅ **7 Kb minifikovaný soubor, (3 Kb Gzipnutý)**
 - ✅ Podporuje IE 10 +
+- ✅ [VYZKOUŠEJTE SI TO NA CODEPEN](https://codepen.io/apicart/pen/Vqorov)
 
 **Content**
 - [Ajax](https://github.com/apicart/js-utils#ajax-utilsajax)
