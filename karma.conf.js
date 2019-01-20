@@ -3,6 +3,7 @@ module.exports = function(config) {
 		frameworks: ['mocha', 'chai'],
 		files: [
 			'dist/utils.js',
+			'tests/helpers.js',
 			'tests/stack-browser.js'
 		],
 		plugins: [
