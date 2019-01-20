@@ -1,5 +1,7 @@
 var helpers = {};
 
+document = document.implementation.createHTMLDocument("Test Document");
+
 helpers.simulateEvent = function (element, event) {
 	if (element instanceof Element) {
 		element = [element];
