@@ -26,11 +26,11 @@
 						});
 
 					workspaceElement.innerHTML = '<button class="test-button"></button>';
-					testHelpers.simulateEvent(document.querySelector('button.test-button'), 'click');
-					testHelpers.simulateEvent(document.querySelector('button.test-button'), 'click');
-					var testElementClasses = document.querySelector('button.test-button').classList;
+					testHelpers.simulateEvent(workspaceElement.querySelector('button.test-button'), 'click');
+					testHelpers.simulateEvent(workspaceElement.querySelector('button.test-button'), 'click');
+					var testElementClasses = workspaceElement.querySelector('button.test-button').classList;
 
-					assert.equal('test-button click second-click', testElementClasses);
+					assert.equal(testElementClasses, 'test-button click second-click');
 				});
 			});
 
@@ -40,10 +40,10 @@
 						dom.addClass(this, 'changed');
 					});
 					workspaceElement.innerHTML = '<input class="test-input">';
-					testHelpers.simulateEvent(document.querySelector('input.test-input'), 'change');
-					var testElementClasses = document.querySelector('input.test-input').classList;
+					testHelpers.simulateEvent(workspaceElement.querySelector('input.test-input'), 'change');
+					var testElementClasses = workspaceElement.querySelector('input.test-input').classList;
 
-					assert.equal('test-input changed', testElementClasses);
+					assert.equal(testElementClasses, 'test-input changed');
 				});
 			});
 		});
@@ -51,17 +51,17 @@
 		describe('findParent()', function () {
 			it('Find parent with given class.', function () {
 				workspaceElement.innerHTML = '<div class="test-parent test-parent-2"><div class="test-parent test-parent-1"><div><div class="test-child"></div></div></div></div>';
-				var parent = dom.findParent(document.querySelector('.test-child'), '.test-parent');
-				assert.isOk(true, parent.classList.contains('test-parent-1'));
+				var parent = dom.findParent(workspaceElement.querySelector('.test-child'), '.test-parent');
+				assert.isOk(parent.classList.contains('test-parent-1'), true);
 			});
 		});
 
 		describe('addClass(), removeClass()', function () {
 			it('Remove class from selected element', function () {
 				workspaceElement.innerHTML = '<div class="classA classB"></div>';
-				dom.addClass(document.querySelector('div.classA'), 'classC classD');
-				dom.removeClass(document.querySelector('div.classA'), 'classB classC');
-				assert.equal('classA classD', document.querySelector('.classA').classList);
+				dom.addClass(workspaceElement.querySelector('div.classA'), 'classC classD');
+				dom.removeClass(workspaceElement.querySelector('div.classA'), 'classB classC');
+				assert.equal(workspaceElement.querySelector('.classA').classList, 'classA classD');
 			});
 		});
 	});
@@ -88,8 +88,8 @@
 
 			eventDispatcher.dispatchEvent('firstEvent secondEvent');
 
-			assert.equal(3, a);
-			assert.equal(3, b);
+			assert.equal(a, 3);
+			assert.equal(b, 3);
 		});
 	});
 
@@ -102,7 +102,7 @@
 				.addMessage('Second message', 'warning')
 				.addMessage('Third message', 'danger');
 
-			assert.equal(3, Object.keys(flashMessages.getMessages()).length);
+			assert.equal(Object.keys(flashMessages.getMessages()).length, 3);
 		});
 
 		it('Check each message content.', function () {
@@ -125,9 +125,9 @@
 				});
 			}
 
-			assert.equal('First message', infoMessage);
-			assert.equal('Second message', warningMessage);
-			assert.equal('Third message', dangerMessage);
+			assert.equal(infoMessage, 'First message');
+			assert.equal(warningMessage, 'Second message');
+			assert.equal(dangerMessage, 'Third message');
 		});
 
 		it('Check iteration over selected type of messages.', function () {
@@ -141,7 +141,7 @@
 				}, 'danger');
 			}
 
-			assert.equal('First message', dangerMessage);
+			assert.equal(dangerMessage, 'First message');
 		});
 	});
 
@@ -149,11 +149,11 @@
 		var json = Utils.json;
 
 		it('isJson()', function () {
-			assert.equal(false, json.isJson(true));
-			assert.equal(false, json.isJson(''));
-			assert.equal(false, json.isJson([]));
-			assert.equal(false, json.isJson({}));
-			assert.equal(true, json.isJson('{}'));
+			assert.equal(json.isJson(true), false);
+			assert.equal(json.isJson(''), false);
+			assert.equal(json.isJson([]), false);
+			assert.equal(json.isJson({}), false);
+			assert.equal(json.isJson('{}'), true);
 		});
 
 		it('parse()', function () {
@@ -162,8 +162,8 @@
 		});
 
 		it('stringify()', function () {
-			assert.equal('{}', json.stringify({}));
-			assert.equal('{"a":1,"b":2}', json.stringify({a: 1, b: 2}));
+			assert.equal(json.stringify({}), '{}');
+			assert.equal(json.stringify({a: 1, b: 2}), '{"a":1,"b":2}');
 		});
 
 	});
@@ -184,9 +184,9 @@
 
 			c.x = 1;
 
-			assert.equal(1, a.x);
-			assert.equal(1, c.x);
-			assert.equal(2, b.x);
+			assert.equal(a.x, 1);
+			assert.equal(c.x, 1);
+			assert.equal(b.x, 2);
 		});
 
 		it('values()', function () {
@@ -238,14 +238,14 @@
 
 			it('Numeral, 32 characters long hash.', function () {
 				var hash = strings.generateHash(32, '0123456789');
-				assert.equal(1, hash.match(/\d+/g).length);
+				assert.equal(hash.match(/\d+/g).length, 1);
 			});
 		});
 
 		describe('sprintf()', function () {
 			it('Replace matches by variables from array', function () {
 				var string = strings.sprintf('%0% is the %1%! %0% %2%!', ['Apicart', 'best', 'rocks']);
-				assert.equal('Apicart is the best! Apicart rocks!', string);
+				assert.equal(string, 'Apicart is the best! Apicart rocks!');
 			});
 
 			it('Replace matches by variables from object', function () {
@@ -254,7 +254,7 @@
 					param2: 'best',
 					param3: 'rocks'
 				});
-				assert.equal('Apicart is the best! Apicart rocks!', string);
+				assert.equal(string, 'Apicart is the best! Apicart rocks!');
 			});
 		});
 
