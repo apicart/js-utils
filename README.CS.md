@@ -4,6 +4,9 @@
 	<a href="https://travis-ci.org/apicart/js-utils">
 		<img src="https://travis-ci.org/apicart/js-utils.svg?branch=master" alt="">
 	</a>
+	<a href="https://www.npmjs.com/package/@apicart/js-utils">
+		<img src="https://img.shields.io/npm/v/@apicart/js-utils.svg" alt="">
+	</a>
 	<a href="https://github.com/apicart/js-utils/blob/master/LICENSE">
 		<img src="https://img.shields.io/github/license/apicart/js-utils.svg" alt="">
 	</a>
