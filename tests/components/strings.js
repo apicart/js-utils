@@ -9,14 +9,14 @@ describe('Strings', function () {
 
 		it('Numeral, 32 characters long hash.', function () {
 			var hash = strings.generateHash(32, '0123456789');
-			assert.equal(1, hash.match(/\d+/g).length);
+			assert.equal(hash.match(/\d+/g).length, 1);
 		});
 	});
 
 	describe('sprintf()', function () {
 		it('Replace matches by variables from array', function () {
 			var string = strings.sprintf('%0% is the %1%! %0% %2%!', ['Apicart', 'best', 'rocks']);
-			assert.equal('Apicart is the best! Apicart rocks!', string);
+			assert.equal(string, 'Apicart is the best! Apicart rocks!');
 		});
 
 		it('Replace matches by variables from object', function () {
@@ -25,7 +25,7 @@ describe('Strings', function () {
 				param2: 'best',
 				param3: 'rocks'
 			});
-			assert.equal('Apicart is the best! Apicart rocks!', string);
+			assert.equal(string, 'Apicart is the best! Apicart rocks!');
 		});
 	});
 

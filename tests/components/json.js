@@ -2,11 +2,11 @@ describe('Json', function () {
 	var json = Utils.json;
 
 	it('isJson()', function () {
-		assert.equal(false, json.isJson(true));
-		assert.equal(false, json.isJson(''));
-		assert.equal(false, json.isJson([]));
-		assert.equal(false, json.isJson({}));
-		assert.equal(true, json.isJson('{}'));
+		assert.equal(json.isJson(true), false);
+		assert.equal(json.isJson(''), false);
+		assert.equal(json.isJson([]), false);
+		assert.equal(json.isJson({}), false);
+		assert.equal(json.isJson('{}'), true);
 	});
 
 	it('parse()', function () {
@@ -15,8 +15,8 @@ describe('Json', function () {
 	});
 
 	it('stringify()', function () {
-		assert.equal('{}', json.stringify({}));
-		assert.equal('{"a":1,"b":2}', json.stringify({a: 1, b: 2}));
+		assert.equal(json.stringify({}), '{}');
+		assert.equal(json.stringify({a: 1, b: 2}), '{"a":1,"b":2}');
 	});
 
 });

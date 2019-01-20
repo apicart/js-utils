@@ -14,9 +14,9 @@ describe('Objects', function () {
 
 		c.x = 1;
 
-		assert.equal(1, a.x);
-		assert.equal(1, c.x);
-		assert.equal(2, b.x);
+		assert.equal(a.x, 1);
+		assert.equal(c.x, 1);
+		assert.equal(b.x, 2);
 	});
 
 	it('values()', function () {

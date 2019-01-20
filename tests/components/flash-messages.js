@@ -7,7 +7,7 @@ describe('Flash messages', function () {
 			.addMessage('Second message', 'warning')
 			.addMessage('Third message', 'danger');
 
-		assert.equal(3, Object.keys(flashMessages.getMessages()).length);
+		assert.equal(Object.keys(flashMessages.getMessages()).length, 3);
 	});
 
 	it('Check each message content.', function () {
@@ -30,9 +30,9 @@ describe('Flash messages', function () {
 			});
 		}
 
-		assert.equal('First message', infoMessage);
-		assert.equal('Second message', warningMessage);
-		assert.equal('Third message', dangerMessage);
+		assert.equal(infoMessage, 'First message');
+		assert.equal(warningMessage, 'Second message');
+		assert.equal(dangerMessage, 'Third message');
 	});
 
 	it('Check iteration over selected type of messages.', function () {
@@ -46,6 +46,6 @@ describe('Flash messages', function () {
 			}, 'danger');
 		}
 
-		assert.equal('First message', dangerMessage);
+		assert.equal(dangerMessage, 'First message');
 	});
 });

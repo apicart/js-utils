@@ -21,11 +21,11 @@ describe('DOM', function () {
 					});
 
 				workspaceElement.innerHTML = '<button class="test-button"></button>';
-				testHelpers.simulateEvent(document.querySelector('button.test-button'), 'click');
-				testHelpers.simulateEvent(document.querySelector('button.test-button'), 'click');
-				var testElementClasses = document.querySelector('button.test-button').classList;
+				testHelpers.simulateEvent(workspaceElement.querySelector('button.test-button'), 'click');
+				testHelpers.simulateEvent(workspaceElement.querySelector('button.test-button'), 'click');
+				var testElementClasses = workspaceElement.querySelector('button.test-button').classList;
 
-				assert.equal('test-button click second-click', testElementClasses);
+				assert.equal(testElementClasses, 'test-button click second-click');
 			});
 		});
 
@@ -35,10 +35,10 @@ describe('DOM', function () {
 					dom.addClass(this, 'changed');
 				});
 				workspaceElement.innerHTML = '<input class="test-input">';
-				testHelpers.simulateEvent(document.querySelector('input.test-input'), 'change');
-				var testElementClasses = document.querySelector('input.test-input').classList;
+				testHelpers.simulateEvent(workspaceElement.querySelector('input.test-input'), 'change');
+				var testElementClasses = workspaceElement.querySelector('input.test-input').classList;
 
-				assert.equal('test-input changed', testElementClasses);
+				assert.equal(testElementClasses, 'test-input changed');
 			});
 		});
 	});
@@ -46,17 +46,17 @@ describe('DOM', function () {
 	describe('findParent()', function () {
 		it('Find parent with given class.', function () {
 			workspaceElement.innerHTML = '<div class="test-parent test-parent-2"><div class="test-parent test-parent-1"><div><div class="test-child"></div></div></div></div>';
-			var parent = dom.findParent(document.querySelector('.test-child'), '.test-parent');
-			assert.isOk(true, parent.classList.contains('test-parent-1'));
+			var parent = dom.findParent(workspaceElement.querySelector('.test-child'), '.test-parent');
+			assert.isOk(parent.classList.contains('test-parent-1'), true);
 		});
 	});
 
 	describe('addClass(), removeClass()', function () {
 		it('Remove class from selected element', function () {
 			workspaceElement.innerHTML = '<div class="classA classB"></div>';
-			dom.addClass(document.querySelector('div.classA'), 'classC classD');
-			dom.removeClass(document.querySelector('div.classA'), 'classB classC');
-			assert.equal('classA classD', document.querySelector('.classA').classList);
+			dom.addClass(workspaceElement.querySelector('div.classA'), 'classC classD');
+			dom.removeClass(workspaceElement.querySelector('div.classA'), 'classB classC');
+			assert.equal(workspaceElement.querySelector('.classA').classList, 'classA classD');
 		});
 	});
 });

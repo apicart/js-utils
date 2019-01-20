@@ -20,7 +20,7 @@ describe('Event dispatcher', function () {
 
 		eventDispatcher.dispatchEvent('firstEvent secondEvent');
 
-		assert.equal(3, a);
-		assert.equal(3, b);
+		assert.equal(a, 3);
+		assert.equal(b, 3);
 	});
 });
