@@ -1,7 +1,5 @@
 var helpers = {};
 
-document = document.implementation.createHTMLDocument("Test Document");
-document.body.innerHTML += '<div id="workspace"></div>';
 
 helpers.simulateEvent = function (element, event) {
 	if (element instanceof Element) {
