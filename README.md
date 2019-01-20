@@ -12,6 +12,7 @@
 - A small set of useful utilities for simpler development.
 - ✅ **7 Kb minified (3 Kb Gzipped)**
 - ✅ Supports IE 10 +
+- ✅ [TRY IT ON CODEPEN](https://codepen.io/apicart/pen/Vqorov)
 
 **Content**
 - [Ajax](https://github.com/apicart/js-utils#ajax-utilsajax)
