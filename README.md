@@ -36,6 +36,13 @@
 <script src="https://cdn.jsdelivr.net/gh/apicart/js-utils/dist/utils.min.js"></script>
 ```
 
+### Npm & Yarn
+```
+npm i @apicart/js-utils
+
+yarn add @apicart/js-utils
+```
+
 ## Ajax (Utils.ajax)
 This component simplifies work with the XMLHttpRequest.
 
