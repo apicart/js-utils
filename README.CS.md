@@ -35,8 +35,11 @@
 
 ### Cdn 
 ```html
-<!-- Master version from Github -->
+<!-- Master verze z Githubu -->
 <script src="https://cdn.jsdelivr.net/gh/apicart/js-utils/dist/utils.min.js"></script>
+
+<!-- v1.0.0-alpha1 z jsdelivr.net -->
+<script src="https://cdn.jsdelivr.net/npm/@apicart/js-utils@1.0.0-alpha1/dist/utils.min.js" integrity="sha256-eo4u9fSxiYhrAT7PpLhbWEFHsiuBnTV0krDfY7VeQE4=" crossorigin="anonymous"></script>
 ```
 
 ### Npm & Yarn
