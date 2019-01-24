@@ -12,8 +12,11 @@ export function ajax(parameters) {
 		requestConfiguration = {
 			async: true,
 			cache: true,
+			queryParameters: {},
 			data: {},
-			headers: {},
+			headers: {
+				'Content-Type': 'application/json'
+			},
 			method: 'get',
 			timeout: 5000,
 			url: '',
@@ -27,9 +30,34 @@ export function ajax(parameters) {
 		requestConfiguration[parameterKey] = parameter;
 	});
 
+	var requestConfigurationUrlHasParameters = requestConfiguration.url.indexOf('?') > -1;
+
 	if ( ! requestConfiguration.cache) {
-		requestConfiguration.url += requestConfiguration.url.indexOf('?') === -1 ? '?' : '&';
-		requestConfiguration.url += strings.generatehash(10);
+		requestConfiguration.queryParameters['h'] = strings.generatehash(10);
+	}
+
+	if (requestConfiguration.method === 'get') {
+		requestConfiguration.queryParameters = objects.merge(
+			requestConfiguration.queryParameters, requestConfiguration.data
+		);
+		requestConfiguration.data = {};
+	}
+
+	if ( ! validators.isEmpty(requestConfiguration.queryParameters)) {
+		if ( ! requestConfigurationUrlHasParameters) {
+			requestConfiguration.url += '?'
+		}
+
+		var firstParameter = true;
+
+		loops.forEach(requestConfiguration.queryParameters, function (parameter, value) {
+			if ( ! firstParameter) {
+				requestConfiguration.url += '&';
+			}
+
+			requestConfiguration.url += parameter + '=' + encodeURIComponent(value);
+			firstParameter = false;
+		});
 	}
 
 	var request = new XMLHttpRequest();
@@ -46,18 +74,36 @@ export function ajax(parameters) {
 	}
 
 	request.onreadystatechange = function () {
+		var responseObjectData = request.responseText;
+
+		if (requestConfiguration.headers["Content-Type"] === 'application/json') {
+			responseObjectData = json.parse(responseObjectData);
+		}
+
+		var responseObject = {
+			config: requestConfiguration,
+			data: responseObjectData,
+			headers: request.headers,
+			request: request,
+			status: request.status,
+			statusText: request.statusText
+		};
+
 		if (request.readyState === 2) {
-			requestConfiguration.start(request);
+			requestConfiguration.start(responseObject);
 
 		} else if (request.readyState === 4) {
-			requestConfiguration.complete(request);
+			requestConfiguration.complete(responseObject);
 		}
 	};
 
-	if (validators.isEmpty(requestConfiguration.data)) {
-		request.send();
-
-	} else {
-		request.send(requestConfiguration.data);
+	if (typeof requestConfiguration.data !== 'string') {
+		requestConfiguration.data = json.stringify(requestConfiguration.data);
 	}
+
+	if (validators.isEmpty(requestConfiguration.data)) {
+		requestConfiguration.data = null;
+	}
+
+	request.send(requestConfiguration.data);
 }
