@@ -109,7 +109,7 @@
 	}
 
 	var strings = {
-		firtsToUpper: firstToUpper,
+		firstToUpper: firstToUpper,
 		generateHash: generateHash,
 		sprintf: sprintf
 	};
@@ -138,6 +138,164 @@
 
 	var validators = {
 		isEmpty: isEmpty
+	};
+
+	/**
+	 * @param {{}} object
+	 * @param {string|array} keyPath
+	 * @param {*} value
+	 * @return {Utils.objects}
+	 */
+	function assign(object, keyPath, value) {
+		if (typeof keyPath === 'string') {
+			keyPath = keyPath.split('.');
+		}
+
+		var
+			key,
+			lastKeyIndex = keyPath.length - 1;
+
+		for (var i = 0; i < lastKeyIndex; ++ i) {
+			key = keyPath[i];
+
+			if ( ! (key in object)) {
+				object[key] = {};
+			}
+
+			object = object[key];
+		}
+
+		object[keyPath[lastKeyIndex]] = value;
+
+		return objects;
+	}
+
+	/**
+	 * @param {{}} object
+	 * @return {{}}
+	 */
+	function copy(object) {
+		var newObject = {};
+
+		loops.forEach(object, function (key, value) {
+			newObject[key] = objects.isObject(value) ? objects.copy(value) : value;
+		});
+
+		return newObject;
+	}
+
+	/**
+	 * @param {{}} object
+	 * @param {string|array} keyPath
+	 * @return {Utils.objects}
+	 */
+	function deleteObject(object, keyPath) {
+		if (typeof keyPath === 'string') {
+			keyPath = keyPath.split('.');
+		}
+
+		if (keyPath.length > 1) {
+			loops.forEach(keyPath, function (index, key) {
+				if (typeof object[key] !== 'object') {
+					return false;
+				}
+
+				object = object[key];
+			});
+		}
+
+		delete object[keyPath.pop()];
+
+		return objects;
+	}
+
+	/**
+	 * @param {{}} object
+	 * @param {string[]|string} keyPath
+	 * @return {*|null}
+	 */
+	function find(object, keyPath) {
+		if ( ! keyPath || ! object || typeof object !== 'object') {
+			return null;
+		}
+
+		if (typeof keyPath === 'string') {
+			keyPath = keyPath.split('.');
+		}
+
+		var wrongKeyPath = false;
+		if (keyPath.length > 1) {
+			loops.forEach(keyPath, function (key, keyPathPart) {
+				if (typeof object !== 'object' || ! (keyPathPart in object)) {
+					wrongKeyPath = true;
+					return false;
+				}
+
+				if (typeof object[keyPathPart] !== 'object') {
+					return false;
+				}
+
+				object = object[keyPathPart];
+			});
+		}
+
+		return wrongKeyPath ? null : object[keyPath.pop()];
+	}
+
+	/**
+	 * @param {*} data
+	 * @return {boolean}
+	 */
+	function isObject(data) {
+		if (typeof data === 'undefined' || data === null || Array.isArray(data)) {
+			return false;
+		}
+
+		return typeof data === 'object';
+	}
+
+	/**
+	 * @param objects
+	 * @return {{}}
+	 */
+	function merge() {
+		var
+			newObject = {},
+			iterable = Array.prototype.slice.call(arguments);
+
+		loops.forEach(iterable, function (objectKey, object) {
+			loops.forEach(object, function (key, value) {
+				newObject[key] = ! (key in newObject) || ! objects.isObject(value)
+					? value
+					: objects.merge(newObject[key], value);
+			});
+		});
+
+		return newObject;
+	}
+
+	/**
+	 * @param {{}} object
+	 * @return {Array}
+	 */
+	function values(object) {
+		var values = [];
+
+		loops.forEach(object, function (key, value) {
+			values.push(value);
+		});
+
+		return values;
+	}
+
+	var objects = {
+		assign: assign,
+		copy: copy,
+		delete: deleteObject,
+		find: find,
+		isObject: isObject,
+		merge: merge,
+		values: values
 	};
 
 	/**
@@ -170,7 +328,7 @@
 		var requestConfigurationUrlHasParameters = requestConfiguration.url.indexOf('?') > -1;
 
 		if ( ! requestConfiguration.cache) {
-			requestConfiguration.queryParameters['h'] = strings.generatehash(10);
+			requestConfiguration.queryParameters['h'] = strings.generateHash(10);
 		}
 
 		if (requestConfiguration.method === 'get') {
@@ -471,164 +629,6 @@
 		trigger: trigger
 	};
 
-	/**
-	 * @param {{}} object
-	 * @param {string|array} keyPath
-	 * @param {*} value
-	 * @return {Utils.objects}
-	 */
-	function assign(object, keyPath, value) {
-		if (typeof keyPath === 'string') {
-			keyPath = keyPath.split('.');
-		}
-
-		var
-			key,
-			lastKeyIndex = keyPath.length - 1;
-
-		for (var i = 0; i < lastKeyIndex; ++ i) {
-			key = keyPath[i];
-
-			if ( ! (key in object)) {
-				object[key] = {};
-			}
-
-			object = object[key];
-		}
-
-		object[keyPath[lastKeyIndex]] = value;
-
-		return objects$1;
-	}
-
-	/**
-	 * @param {{}} object
-	 * @return {{}}
-	 */
-	function copy(object) {
-		var newObject = {};
-
-		loops.forEach(object, function (key, value) {
-			newObject[key] = objects$1.isObject(value) ? objects$1.copy(value) : value;
-		});
-
-		return newObject;
-	}
-
-	/**
-	 * @param {{}} object
-	 * @param {string|array} keyPath
-	 * @return {Utils.objects}
-	 */
-	function deleteObject(object, keyPath) {
-		if (typeof keyPath === 'string') {
-			keyPath = keyPath.split('.');
-		}
-
-		if (keyPath.length > 1) {
-			loops.forEach(keyPath, function (index, key) {
-				if (typeof object[key] !== 'object') {
-					return false;
-				}
-
-				object = object[key];
-			});
-		}
-
-		delete object[keyPath.pop()];
-
-		return objects$1;
-	}
-
-	/**
-	 * @param {{}} object
-	 * @param {string[]|string} keyPath
-	 * @return {*|null}
-	 */
-	function find(object, keyPath) {
-		if ( ! keyPath || ! object || typeof object !== 'object') {
-			return null;
-		}
-
-		if (typeof keyPath === 'string') {
-			keyPath = keyPath.split('.');
-		}
-
-		var wrongKeyPath = false;
-		if (keyPath.length > 1) {
-			loops.forEach(keyPath, function (key, keyPathPart) {
-				if (typeof object !== 'object' || ! (keyPathPart in object)) {
-					wrongKeyPath = true;
-					return false;
-				}
-
-				if (typeof object[keyPathPart] !== 'object') {
-					return false;
-				}
-
-				object = object[keyPathPart];
-			});
-		}
-
-		return wrongKeyPath ? null : object[keyPath.pop()];
-	}
-
-	/**
-	 * @param {*} data
-	 * @return {boolean}
-	 */
-	function isObject(data) {
-		if (typeof data === 'undefined' || data === null || Array.isArray(data)) {
-			return false;
-		}
-
-		return typeof data === 'object';
-	}
-
-	/**
-	 * @param objects
-	 * @return {{}}
-	 */
-	function merge() {
-		var
-			newObject = {},
-			iterable = Array.prototype.slice.call(arguments);
-
-		loops.forEach(iterable, function (objectKey, object) {
-			loops.forEach(object, function (key, value) {
-				newObject[key] = ! (key in newObject) || ! objects$1.isObject(value)
-					? value
-					: objects$1.merge(newObject[key], value);
-			});
-		});
-
-		return newObject;
-	}
-
-	/**
-	 * @param {{}} object
-	 * @return {Array}
-	 */
-	function values(object) {
-		var values = [];
-
-		loops.forEach(object, function (key, value) {
-			values.push(value);
-		});
-
-		return values;
-	}
-
-	var objects$1 = {
-		assign: assign,
-		copy: copy,
-		delete: deleteObject,
-		find: find,
-		isObject: isObject,
-		merge: merge,
-		values: values
-	};
-
 	dom.on('change', DATA_BINDER_SELECTOR, function () {
 		addData(this.getAttribute(DATA_BINDER_PREFIX), this.value);
 	});
@@ -639,7 +639,7 @@
 	 * @return {Utils.dataBinder}
 	 */
 	function addData(keyPath, value) {
-		objects$1.assign(dataBinderData, keyPath, value);
+		objects.assign(dataBinderData, keyPath, value);
 		localStorage.setItem(DATA_BINDER_LOCAL_STORAGE_KEY, json$1.stringify(dataBinderData));
 
 		return dataBinder;
@@ -667,7 +667,7 @@
 				return;
 			}
 
-			var data = objects$1.find(dataBinderData, keyPath);
+			var data = objects.find(dataBinderData, keyPath);
 
 			if ( ! data) {
 				return;
@@ -939,7 +939,7 @@
 		flashMessages: flashMessages,
 		json: json$1,
 		loops: loops,
-		objects: objects$1,
+		objects: objects,
 		strings: strings,
 		url: url,
 		validators: validators
