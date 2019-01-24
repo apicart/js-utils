@@ -4,7 +4,7 @@ import {sprintf} from './sprintf';
 
 
 export var strings = {
-	firtsToUpper: firstToUpper,
+	firstToUpper: firstToUpper,
 	generateHash: generateHash,
 	sprintf: sprintf
 };
