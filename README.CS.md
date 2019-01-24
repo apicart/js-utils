@@ -4,6 +4,9 @@
 	<a href="https://travis-ci.org/apicart/js-utils">
 		<img src="https://travis-ci.org/apicart/js-utils.svg?branch=master" alt="">
 	</a>
+	<a href="https://www.npmjs.com/package/@apicart/js-utils">
+		<img src="https://img.shields.io/npm/v/@apicart/js-utils.svg" alt="">
+	</a>
 	<a href="https://github.com/apicart/js-utils/blob/master/LICENSE">
 		<img src="https://img.shields.io/github/license/apicart/js-utils.svg" alt="">
 	</a>
@@ -12,6 +15,7 @@
 - Malá sada užitečných utilit pro jednodušší vývoj.
 - ✅ **7 Kb minifikovaný soubor, (3 Kb Gzipnutý)**
 - ✅ Podporuje IE 10 +
+- ✅ [VYZKOUŠEJTE SI TO NA CODEPEN](https://codepen.io/apicart/pen/Vqorov)
 
 **Content**
 - [Ajax](https://github.com/apicart/js-utils#ajax-utilsajax)
@@ -31,8 +35,18 @@
 
 ### Cdn 
 ```html
-<!-- Master version from Github -->
+<!-- Master verze z Githubu -->
 <script src="https://cdn.jsdelivr.net/gh/apicart/js-utils/dist/utils.min.js"></script>
+
+<!-- v1.0.0-alpha1 z jsdelivr.net -->
+<script src="https://cdn.jsdelivr.net/npm/@apicart/js-utils@1.0.0-alpha1/dist/utils.min.js" integrity="sha256-eo4u9fSxiYhrAT7PpLhbWEFHsiuBnTV0krDfY7VeQE4=" crossorigin="anonymous"></script>
+```
+
+### Npm & Yarn
+```
+npm i @apicart/js-utils
+
+yarn add @apicart/js-utils
 ```
 
 ## Ajax (Utils.ajax)
