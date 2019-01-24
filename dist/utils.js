@@ -149,8 +149,11 @@
 			requestConfiguration = {
 				async: true,
 				cache: true,
+				queryParameters: {},
 				data: {},
-				headers: {},
+				headers: {
+					'Content-Type': 'application/json'
+				},
 				method: 'get',
 				timeout: 5000,
 				url: '',
@@ -164,9 +167,34 @@
 			requestConfiguration[parameterKey] = parameter;
 		});
 
+		var requestConfigurationUrlHasParameters = requestConfiguration.url.indexOf('?') > -1;
+
 		if ( ! requestConfiguration.cache) {
-			requestConfiguration.url += requestConfiguration.url.indexOf('?') === -1 ? '?' : '&';
-			requestConfiguration.url += strings.generatehash(10);
+			requestConfiguration.queryParameters['h'] = strings.generatehash(10);
+		}
+
+		if (requestConfiguration.method === 'get') {
+			requestConfiguration.queryParameters = objects.merge(
+				requestConfiguration.queryParameters, requestConfiguration.data
+			);
+			requestConfiguration.data = {};
+		}
+
+		if ( ! validators.isEmpty(requestConfiguration.queryParameters)) {
+			if ( ! requestConfigurationUrlHasParameters) {
+				requestConfiguration.url += '?';
+			}
+
+			var firstParameter = true;
+
+			loops.forEach(requestConfiguration.queryParameters, function (parameter, value) {
+				if ( ! firstParameter) {
+					requestConfiguration.url += '&';
+				}
+
+				requestConfiguration.url += parameter + '=' + encodeURIComponent(value);
+				firstParameter = false;
+			});
 		}
 
 		var request = new XMLHttpRequest();
@@ -183,20 +211,38 @@
 		}
 
 		request.onreadystatechange = function () {
+			var responseObjectData = request.responseText;
+
+			if (requestConfiguration.headers["Content-Type"] === 'application/json') {
+				responseObjectData = json.parse(responseObjectData);
+			}
+
+			var responseObject = {
+				config: requestConfiguration,
+				data: responseObjectData,
+				headers: request.headers,
+				request: request,
+				status: request.status,
+				statusText: request.statusText
+			};
+
 			if (request.readyState === 2) {
-				requestConfiguration.start(request);
+				requestConfiguration.start(responseObject);
 
 			} else if (request.readyState === 4) {
-				requestConfiguration.complete(request);
+				requestConfiguration.complete(responseObject);
 			}
 		};
 
-		if (validators.isEmpty(requestConfiguration.data)) {
-			request.send();
-
-		} else {
-			request.send(requestConfiguration.data);
+		if (typeof requestConfiguration.data !== 'string') {
+			requestConfiguration.data = json.stringify(requestConfiguration.data);
 		}
+
+		if (validators.isEmpty(requestConfiguration.data)) {
+			requestConfiguration.data = null;
+		}
+
+		request.send(requestConfiguration.data);
 	}
 
 	/**
@@ -265,7 +311,7 @@
 		return typeof object === 'object' ? JSON.stringify(object) : '';
 	}
 
-	var json = {
+	var json$1 = {
 		isJson: isJson,
 		parse: parse,
 		stringify: stringify
@@ -276,7 +322,7 @@
 	 * @return {{}}
 	 */
 	function parse(content) {
-		return json.isJson(content) ? JSON.parse(content) : {};
+		return json$1.isJson(content) ? JSON.parse(content) : {};
 	}
 
 	var elementPrototype = Element.prototype;
@@ -452,7 +498,7 @@
 
 		object[keyPath[lastKeyIndex]] = value;
 
-		return objects;
+		return objects$1;
 	}
 
 	/**
@@ -463,7 +509,7 @@
 		var newObject = {};
 
 		loops.forEach(object, function (key, value) {
-			newObject[key] = objects.isObject(value) ? objects.copy(value) : value;
+			newObject[key] = objects$1.isObject(value) ? objects$1.copy(value) : value;
 		});
 
 		return newObject;
@@ -491,7 +537,7 @@
 
 		delete object[keyPath.pop()];
 
-		return objects;
+		return objects$1;
 	}
 
 	/**
@@ -550,9 +596,9 @@
 
 		loops.forEach(iterable, function (objectKey, object) {
 			loops.forEach(object, function (key, value) {
-				newObject[key] = ! (key in newObject) || ! objects.isObject(value)
+				newObject[key] = ! (key in newObject) || ! objects$1.isObject(value)
 					? value
-					: objects.merge(newObject[key], value);
+					: objects$1.merge(newObject[key], value);
 			});
 		});
 
@@ -573,7 +619,7 @@
 		return values;
 	}
 
-	var objects = {
+	var objects$1 = {
 		assign: assign,
 		copy: copy,
 		delete: deleteObject,
@@ -593,8 +639,8 @@
 	 * @return {Utils.dataBinder}
 	 */
 	function addData(keyPath, value) {
-		objects.assign(dataBinderData, keyPath, value);
-		localStorage.setItem(DATA_BINDER_LOCAL_STORAGE_KEY, json.stringify(dataBinderData));
+		objects$1.assign(dataBinderData, keyPath, value);
+		localStorage.setItem(DATA_BINDER_LOCAL_STORAGE_KEY, json$1.stringify(dataBinderData));
 
 		return dataBinder;
 	}
@@ -621,7 +667,7 @@
 				return;
 			}
 
-			var data = objects.find(dataBinderData, keyPath);
+			var data = objects$1.find(dataBinderData, keyPath);
 
 			if ( ! data) {
 				return;
@@ -791,7 +837,7 @@
 		}
 
 		flashMessagesItems[type].push(content);
-		localStorage.setItem(FLASH_MESSAGES_STORAGE_KEY, json.stringify(flashMessagesItems));
+		localStorage.setItem(FLASH_MESSAGES_STORAGE_KEY, json$1.stringify(flashMessagesItems));
 
 		return flashMessages;
 	}
@@ -801,7 +847,7 @@
 	 */
 	function getMessages() {
 		var flashMessages$$1 = localStorage.getItem(FLASH_MESSAGES_STORAGE_KEY);
-		flashMessages$$1 = flashMessages$$1 ? json.parse(flashMessages$$1) : {};
+		flashMessages$$1 = flashMessages$$1 ? json$1.parse(flashMessages$$1) : {};
 
 		return flashMessages$$1;
 	}
@@ -843,7 +889,7 @@
 			});
 		}
 
-		localStorage.setItem(FLASH_MESSAGES_STORAGE_KEY, json.stringify({}));
+		localStorage.setItem(FLASH_MESSAGES_STORAGE_KEY, json$1.stringify({}));
 		return flashMessages;
 	}
 
@@ -891,9 +937,9 @@
 		dom: dom,
 		eventDispatcher: eventDispatcher,
 		flashMessages: flashMessages,
-		json: json,
+		json: json$1,
 		loops: loops,
-		objects: objects,
+		objects: objects$1,
 		strings: strings,
 		url: url,
 		validators: validators
