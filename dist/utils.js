@@ -299,6 +299,47 @@
 	};
 
 	/**
+	 * @param {string} content
+	 * @return {boolean}
+	 */
+	function isJson(content) {
+		if (typeof content !== 'string') {
+			return false;
+		}
+
+		try {
+			JSON.parse(content);
+
+		} catch (e) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param {string} content
+	 * @return {{}}
+	 */
+	function parse(content) {
+		return json.isJson(content) ? JSON.parse(content) : {};
+	}
+
+	/**
+	 * @param {{}} object
+	 * @return {string}
+	 */
+	function stringify(object) {
+		return typeof object === 'object' ? JSON.stringify(object) : '';
+	}
+
+	var json = {
+		isJson: isJson,
+		parse: parse,
+		stringify: stringify
+	};
+
+	/**
 	 * @param {Object} parameters
 	 */
 	function ajax(parameters) {
@@ -441,47 +482,6 @@
 		log: log,
 		warn: warn
 	};
-
-	/**
-	 * @param {string} content
-	 * @return {boolean}
-	 */
-	function isJson(content) {
-		if (typeof content !== 'string') {
-			return false;
-		}
-
-		try {
-			JSON.parse(content);
-
-		} catch (e) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param {{}} object
-	 * @return {string}
-	 */
-	function stringify(object) {
-		return typeof object === 'object' ? JSON.stringify(object) : '';
-	}
-
-	var json$1 = {
-		isJson: isJson,
-		parse: parse,
-		stringify: stringify
-	};
-
-	/**
-	 * @param {string} content
-	 * @return {{}}
-	 */
-	function parse(content) {
-		return json$1.isJson(content) ? JSON.parse(content) : {};
-	}
 
 	var elementPrototype = Element.prototype;
 
@@ -640,7 +640,7 @@
 	 */
 	function addData(keyPath, value) {
 		objects.assign(dataBinderData, keyPath, value);
-		localStorage.setItem(DATA_BINDER_LOCAL_STORAGE_KEY, json$1.stringify(dataBinderData));
+		localStorage.setItem(DATA_BINDER_LOCAL_STORAGE_KEY, json.stringify(dataBinderData));
 
 		return dataBinder;
 	}
@@ -837,7 +837,7 @@
 		}
 
 		flashMessagesItems[type].push(content);
-		localStorage.setItem(FLASH_MESSAGES_STORAGE_KEY, json$1.stringify(flashMessagesItems));
+		localStorage.setItem(FLASH_MESSAGES_STORAGE_KEY, json.stringify(flashMessagesItems));
 
 		return flashMessages;
 	}
@@ -847,7 +847,7 @@
 	 */
 	function getMessages() {
 		var flashMessages$$1 = localStorage.getItem(FLASH_MESSAGES_STORAGE_KEY);
-		flashMessages$$1 = flashMessages$$1 ? json$1.parse(flashMessages$$1) : {};
+		flashMessages$$1 = flashMessages$$1 ? json.parse(flashMessages$$1) : {};
 
 		return flashMessages$$1;
 	}
@@ -889,7 +889,7 @@
 			});
 		}
 
-		localStorage.setItem(FLASH_MESSAGES_STORAGE_KEY, json$1.stringify({}));
+		localStorage.setItem(FLASH_MESSAGES_STORAGE_KEY, json.stringify({}));
 		return flashMessages;
 	}
 
@@ -937,7 +937,7 @@
 		dom: dom,
 		eventDispatcher: eventDispatcher,
 		flashMessages: flashMessages,
-		json: json$1,
+		json: json,
 		loops: loops,
 		objects: objects,
 		strings: strings,
