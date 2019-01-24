@@ -1,6 +1,7 @@
 import {loops} from './loops/loops';
 import {strings} from './strings/strings';
 import {validators} from './validators/validators';
+import {objects} from "./objects/objects";
 
 
 /**
@@ -33,7 +34,7 @@ export function ajax(parameters) {
 	var requestConfigurationUrlHasParameters = requestConfiguration.url.indexOf('?') > -1;
 
 	if ( ! requestConfiguration.cache) {
-		requestConfiguration.queryParameters['h'] = strings.generatehash(10);
+		requestConfiguration.queryParameters['h'] = strings.generateHash(10);
 	}
 
 	if (requestConfiguration.method === 'get') {
