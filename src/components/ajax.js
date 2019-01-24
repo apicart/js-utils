@@ -2,6 +2,7 @@ import {loops} from './loops/loops';
 import {strings} from './strings/strings';
 import {validators} from './validators/validators';
 import {objects} from "./objects/objects";
+import {json} from "./json/json";
 
 
 /**
