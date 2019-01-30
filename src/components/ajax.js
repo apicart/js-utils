@@ -16,9 +16,7 @@ export function ajax(parameters) {
 			cache: true,
 			queryParameters: {},
 			data: {},
-			headers: {
-				'Content-Type': 'application/json'
-			},
+			headers: {},
 			method: 'get',
 			timeout: 5000,
 			url: '',
@@ -78,7 +76,7 @@ export function ajax(parameters) {
 	request.onreadystatechange = function () {
 		var responseObjectData = request.responseText;
 
-		if (requestConfiguration.headers["Content-Type"] === 'application/json') {
+		if (json.isJson(responseObjectData)) {
 			responseObjectData = json.parse(responseObjectData);
 		}
 
