@@ -3,6 +3,7 @@ import {strings} from './strings/strings';
 import {validators} from './validators/validators';
 import {objects} from './objects/objects';
 import {json} from './json/json';
+import {console} from "./console/console";
 
 
 /**
@@ -29,6 +30,11 @@ export function ajax(parameters) {
 	loops.forEach(parameters, function (parameterKey, parameter) {
 		requestConfiguration[parameterKey] = parameter;
 	});
+
+	if (validators.isEmpty(requestConfiguration.url)) {
+		console.warn('@apicart/js-utils: No url provided for ajax request:', requestConfiguration);
+		return;
+	}
 
 	var requestConfigurationUrlHasParameters = requestConfiguration.url.indexOf('?') > -1;
 
