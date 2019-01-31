@@ -1,8 +1,8 @@
 import {loops} from './loops/loops';
 import {strings} from './strings/strings';
 import {validators} from './validators/validators';
-import {objects} from "./objects/objects";
-import {json} from "./json/json";
+import {objects} from './objects/objects';
+import {json} from './json/json';
 
 
 /**
@@ -45,7 +45,7 @@ export function ajax(parameters) {
 
 	if ( ! validators.isEmpty(requestConfiguration.queryParameters)) {
 		if ( ! requestConfigurationUrlHasParameters) {
-			requestConfiguration.url += '?'
+			requestConfiguration.url += '?';
 		}
 
 		var firstParameter = true;
