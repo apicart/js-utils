@@ -129,7 +129,7 @@
 			return false;
 
 		} else if (dataType === 'string') {
-			return !! data.length;
+			return data.length === 0;
 
 		} else if (dataType === 'object' || Array.isArray(data)) {
 			return Object.keys(data).length < 1;
@@ -340,6 +340,45 @@
 	};
 
 	/**
+	 * @return {utilsConsole}
+	 */
+	function error() {
+		if (typeof console.error !== 'undefined') {
+			console.error.apply(null, Array.prototype.slice.call(arguments));
+		}
+
+		return console$1;
+	}
+
+	/**
+	 * @return {Utils.console}
+	 */
+	function log() {
+		if (typeof console.log !== 'undefined') {
+			console.log.apply(null, Array.prototype.slice.call(arguments));
+		}
+
+		return console$1;
+	}
+
+	/**
+	 * @return {Utils.console}
+	 */
+	function warn() {
+		if (typeof console.warn !== 'undefined') {
+			console.warn.apply(null, Array.prototype.slice.call(arguments));
+		}
+
+		return console$1;
+	}
+
+	var console$1 = {
+		error: error,
+		log: log,
+		warn: warn
+	};
+
+	/**
 	 * @param {Object} parameters
 	 */
 	function ajax(parameters) {
@@ -363,6 +402,11 @@
 		loops.forEach(parameters, function (parameterKey, parameter) {
 			requestConfiguration[parameterKey] = parameter;
 		});
+
+		if (validators.isEmpty(requestConfiguration.url)) {
+			console$1.warn('@apicart/js-utils: No url provided for ajax request:', requestConfiguration);
+			return;
+		}
 
 		var requestConfigurationUrlHasParameters = requestConfiguration.url.indexOf('?') > -1;
 
@@ -441,45 +485,6 @@
 
 		request.send(requestConfiguration.data);
 	}
-
-	/**
-	 * @return {utilsConsole}
-	 */
-	function error() {
-		if (typeof console.error !== 'undefined') {
-			console.error.apply(null, Array.prototype.slice.call(arguments));
-		}
-
-		return console$1;
-	}
-
-	/**
-	 * @return {Utils.console}
-	 */
-	function log() {
-		if (typeof console.log !== 'undefined') {
-			console.log.apply(null, Array.prototype.slice.call(arguments));
-		}
-
-		return console$1;
-	}
-
-	/**
-	 * @return {Utils.console}
-	 */
-	function warn() {
-		if (typeof console.warn !== 'undefined') {
-			console.warn.apply(null, Array.prototype.slice.call(arguments));
-		}
-
-		return console$1;
-	}
-
-	var console$1 = {
-		error: error,
-		log: log,
-		warn: warn
-	};
 
 	var elementPrototype = Element.prototype;
 
