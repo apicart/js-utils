@@ -22,7 +22,7 @@
 			keysLength,
 			key;
 
-		if (typeof iterable === 'undefined' || iterable === null) {
+		if (['undefined', 'number'].indexOf(typeof iterable) > -1 || iterable === null) {
 			return;
 		}
 
