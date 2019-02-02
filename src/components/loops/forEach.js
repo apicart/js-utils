@@ -19,10 +19,10 @@ export function forEach(iterable, callback) {
 				return Math.abs(this.counter % 2) === 1;
 			},
 			isFirst: function () {
-				return this.counter === 1
+				return this.counter === 1;
 			},
 			isLast: function () {
-				return this.counter === iterableLength
+				return this.counter === iterableLength;
 			}
 		},
 		iterableLength,
@@ -58,7 +58,6 @@ export function forEach(iterable, callback) {
 
 		if ( ! keys.length) {
 			return;
-
 		}
 
 		iteratorObject.iterableLength = keysLength;

@@ -3,7 +3,7 @@ import {strings} from './strings/strings';
 import {validators} from './validators/validators';
 import {objects} from './objects/objects';
 import {json} from './json/json';
-import {console} from "./console/console";
+import {console} from './console/console';
 
 
 /**
