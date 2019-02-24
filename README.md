@@ -70,7 +70,7 @@ This component simplifies work with the XMLHttpRequest.
 Utils.ajax({
     url: 'https://example.com',
     method: 'post',
-    complete: function (request){
+    complete: function (response){
         alert('Done');
     }
 });
@@ -165,9 +165,11 @@ Utils.json.stringify({a: "b"}); // "{a: "b"}"
 ## Loops (Utils.loops)
 **forEach(*object*|*array* $iterable, *function* $callback): void**
 
-Function that is able to iterate over objects and arrays.
+Function that is able to iterate over objects and arrays. Inside this function the `this` object is an object containing *counter, iterableLength* parameters and *isFirst, isLast, isEven, isOdd* functions.
+
 ```js
 Utils.loops.forEach([1, 2, 3], function(key, value) {...});
+Utils.loops.forEach([1, 2, 3], function(key, value) {console.log(this.counter, this.isFirst());...});
 Utils.loops.forEach(document.querySelectorAll('.element'), function(key, element) {...});
 ```
 
