@@ -1,6 +1,6 @@
 {
   "name": "@apicart/js-utils",
-  "version": "1.0.0-alpha1",
+  "version": "1.0.0-alpha2",
   "description": "A small set of useful utilities for simpler development.",
   "main": "dist/utils.min.js",
   "unpkg": "dist/utils.min.js",
@@ -11,6 +11,8 @@
   ],
   "scripts": {
     "dev": "rollup -w src -c scripts/dev.js",
+	"build": "yarn build:dev && yarn build:prod && yarn build:prod-min && yarn build:test-stack",
+  	"build:dev": "rollup -c scripts/dev.js",
     "build:prod": "rollup -c scripts/prod.js",
     "build:prod-min": "rollup -c scripts/prod.min.js",
     "build:test-stack": "rollup -c scripts/test-stack.js",
