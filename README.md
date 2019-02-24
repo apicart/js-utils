@@ -60,10 +60,10 @@ This component simplifies work with the XMLHttpRequest.
 
 **Parameters**
 
-| Parameter       | async    | cache    | data   | headers | method | timeout | url    | withCredentials | start         | complete      |
-|-----------------|----------|----------|--------|---------|--------|---------|--------|-----------------|---------------|---------------|
-| Type            | boolean  | boolean  | object | object  | string | number  | string | boolean         | function      | function      |
-| Default value   | true     | true     | {}     | {}      | get    | 5000    | ''     | false           | function() {} | function() {} |
+| Parameter     | async   | cache   | data   | headers | method | queryParameters | timeout | url    | withCredentials | start         | complete      |
+|---------------|---------|---------|--------|---------|--------|-----------------|---------|--------|-----------------|---------------|---------------|
+| Type          | boolean | boolean | object | object  | string | object          | number  | string | boolean         | function      | function      |
+| Default value | true    | true    | {}     | {}      | get    | {}              | 5000    | ''     | false           | function() {} | function() {} |
 
 **ajax(*object* $parameters): *void***
 ```js
