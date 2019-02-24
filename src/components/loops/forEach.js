@@ -22,7 +22,7 @@ export function forEach(iterable, callback) {
 				return this.counter === 1;
 			},
 			isLast: function () {
-				return this.counter === iterableLength;
+				return this.counter === this.iterableLength;
 			}
 		},
 		iterableLength,
