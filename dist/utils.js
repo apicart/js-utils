@@ -1,5 +1,5 @@
 /** 
- * utils.js v1.0.0-alpha1 
+ * utils.js v1.0.0-alpha2 
  * (c) 2018-2019 Vladimír Macháček
  *  Released under the MIT License.
  */
@@ -29,7 +29,7 @@
 					return this.counter === 1;
 				},
 				isLast: function () {
-					return this.counter === iterableLength;
+					return this.counter === this.iterableLength;
 				}
 			},
 			iterableLength,
@@ -506,6 +506,94 @@
 		request.send(requestConfiguration.data);
 	}
 
+	/**
+	 * @param {string} keyPath
+	 * @param {*} value
+	 * @return {Utils.dataBinder}
+	 */
+	function addData(keyPath, value) {
+		objects.assign(dataBinderData, keyPath, value);
+		localStorage.setItem(DATA_BINDER_LOCAL_STORAGE_KEY, json.stringify(dataBinderData));
+
+		return dataBinder;
+	}
+
+	document.addEventListener('DOMContentLoaded', function () {
+		bindData();
+	});
+
+	/**
+	 * @param {boolean|null} all
+	 * @return {Utils.dataBinder}
+	 */
+	function bindData(all) {
+		all = all || false;
+
+		var elements = document.querySelectorAll(
+			all ? DATA_BINDER_SELECTOR : DATA_BINDER_SELECTOR + ':not([' + DATA_BINDER_DATA_BOUND_ATTRIBUTE + '])'
+		);
+
+		loops.forEach(elements, function (key, element) {
+			var keyPath = element.getAttribute(DATA_BINDER_PREFIX);
+
+			if ( ! keyPath) {
+				return;
+			}
+
+			var data = objects.find(dataBinderData, keyPath);
+
+			if ( ! data) {
+				return;
+			}
+
+			var
+				bindCondition = element.getAttribute(DATA_BINDER_PREFIX + '-if'),
+				elementTagName = element.tagName.toLowerCase();
+
+			if (DATA_BINDER_ELEMENTS_WITH_VALUE_ATTRIBUTE.indexOf(elementTagName) > -1) {
+				if (bindCondition === DATA_BINDER_BIND_IF_EMPTY_CONDITION && element.value) {
+					return;
+				}
+
+				if (elementTagName === 'input'
+					&& element.getAttribute('type') === 'radio'
+					&& element.getAttribute('name')
+				) {
+					document.querySelector('[name="' + element.getAttribute('name') + '"][value="' + data +'"]')
+						.checked = true;
+
+				} else {
+					element.value = data;
+				}
+
+			} else {
+				if (bindCondition === DATA_BINDER_BIND_IF_EMPTY_CONDITION && element.innerHTML.trim()) {
+					return;
+				}
+
+				element.innerHTML = data;
+			}
+
+			element.setAttribute(DATA_BINDER_DATA_BOUND_ATTRIBUTE, true);
+		});
+
+		return dataBinder;
+	}
+
+	/**
+	 * @param {string} keyPath
+	 * @return {Utils.dataBinder}
+	 */
+	function removeData(keyPath) {
+		if (keyPath) {
+			deleteObject(dataBinderData, keyPath);
+		}
+
+		localStorage.setItem(DATA_BINDER_LOCAL_STORAGE_KEY, stringify(dataBinderData));
+
+		return dataBinder;
+	}
+
 	var elementPrototype = Element.prototype;
 
 
@@ -652,99 +740,7 @@
 		trigger: trigger
 	};
 
-	dom.on('change', DATA_BINDER_SELECTOR, function () {
-		addData(this.getAttribute(DATA_BINDER_PREFIX), this.value);
-	});
-
-	/**
-	 * @param {string} keyPath
-	 * @param {*} value
-	 * @return {Utils.dataBinder}
-	 */
-	function addData(keyPath, value) {
-		objects.assign(dataBinderData, keyPath, value);
-		localStorage.setItem(DATA_BINDER_LOCAL_STORAGE_KEY, json.stringify(dataBinderData));
-
-		return dataBinder;
-	}
-
-	document.addEventListener('DOMContentLoaded', function () {
-		bindData();
-	});
-
-	/**
-	 * @param {boolean|null} all
-	 * @return {Utils.dataBinder}
-	 */
-	function bindData(all) {
-		all = all || false;
-
-		var elements = document.querySelectorAll(
-			all ? DATA_BINDER_SELECTOR : DATA_BINDER_SELECTOR + ':not([' + DATA_BINDER_DATA_BOUND_ATTRIBUTE + '])'
-		);
-
-		loops.forEach(elements, function (key, element) {
-			var keyPath = element.getAttribute(DATA_BINDER_PREFIX);
-
-			if ( ! keyPath) {
-				return;
-			}
-
-			var data = objects.find(dataBinderData, keyPath);
-
-			if ( ! data) {
-				return;
-			}
-
-			var
-				bindCondition = element.getAttribute(DATA_BINDER_PREFIX + '-if'),
-				elementTagName = element.tagName.toLowerCase();
-
-			if (DATA_BINDER_ELEMENTS_WITH_VALUE_ATTRIBUTE.indexOf(elementTagName) > -1) {
-				if (bindCondition === DATA_BINDER_BIND_IF_EMPTY_CONDITION && element.value) {
-					return;
-				}
-
-				if (elementTagName === 'input'
-					&& element.getAttribute('type') === 'radio'
-					&& element.getAttribute('name')
-				) {
-					document.querySelector('[name="' + element.getAttribute('name') + '"][value="' + data +'"]')
-						.checked = true;
-
-				} else {
-					element.value = data;
-				}
-
-			} else {
-				if (bindCondition === DATA_BINDER_BIND_IF_EMPTY_CONDITION && element.innerHTML.trim()) {
-					return;
-				}
-
-				element.innerHTML = data;
-			}
-
-			element.setAttribute(DATA_BINDER_DATA_BOUND_ATTRIBUTE, true);
-		});
-
-		return dataBinder;
-	}
-
-	/**
-	 * @param {string} keyPath
-	 * @return {Utils.dataBinder}
-	 */
-	function removeData(keyPath) {
-		if (keyPath) {
-			deleteObject(dataBinderData, keyPath);
-		}
-
-		localStorage.setItem(DATA_BINDER_LOCAL_STORAGE_KEY, stringify(dataBinderData));
-
-		return dataBinder;
-	}
-
-	// TODO solve multicheckbox saving
+	// TODO solve multicheckbox and multiselect saving
 
 	var DATA_BINDER_PREFIX = 'data-bind';
 	var DATA_BINDER_ELEMENTS_WITH_VALUE_ATTRIBUTE = ['select', 'input'];
@@ -754,6 +750,10 @@
 	var DATA_BINDER_BIND_IF_EMPTY_CONDITION = 'empty';
 	var dataBinderLocalStorageData = localStorage.getItem(DATA_BINDER_LOCAL_STORAGE_KEY);
 	var dataBinderData = dataBinderLocalStorageData ? parse(dataBinderLocalStorageData) : {};
+
+	dom.on('change', DATA_BINDER_SELECTOR, function () {
+		addData(this.getAttribute(DATA_BINDER_PREFIX), this.value);
+	});
 
 	var dataBinder = {
 		addData: addData,
