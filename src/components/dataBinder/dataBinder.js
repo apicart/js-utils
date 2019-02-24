@@ -4,7 +4,7 @@ import {parse} from '../json/parse';
 import {addData} from './addData';
 import {bindData} from './bindData';
 import {removeData} from './removeData';
-import {dom} from "../dom/dom";
+import {dom} from '../dom/dom';
 
 export var DATA_BINDER_PREFIX = 'data-bind';
 export var DATA_BINDER_ELEMENTS_WITH_VALUE_ATTRIBUTE = ['select', 'input'];
