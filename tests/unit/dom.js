@@ -6,7 +6,7 @@ describe('DOM', function () {
 		workspaceElement;
 
 	beforeEach(function () {
-		workspaceElement = document.querySelector('body');
+		workspaceElement = testHelpers.getWorkspaceElement();
 	});
 
 	describe('on()', function () {
